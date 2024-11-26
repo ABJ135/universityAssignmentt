@@ -14,7 +14,7 @@ const addTransaction = async(req,res)=>{
 
 const showAllTransaction = async (req,res)=>{
     try{
-        const object = await Transaction.find()
+        const object = await Transaction.find().populate('bookId','memberId')
         res.status(200),json(object)
     }
     catch(error)
