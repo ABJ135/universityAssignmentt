@@ -1,4 +1,7 @@
 const Transaction = require("../models/transactions.model");
+const Book = require('../models/books.model')
+const Member = require('../models/members.model')
+
 
 const addTransaction = async (req, res) => {
   try {
@@ -19,7 +22,23 @@ const showAllTransaction = async (req, res) => {
   }
 };
 
+const addAll = async (req,res)=>{
+  try{
+  const {book,member,transaction} = req.body
+    const createBook = await Book.create(book)
+    const createMember = await Member.create(member)
+    transaction.bookId = createBook._id
+    transaction.memberId = createMember._id
+    await Transaction.create(transaction)
+    res.status(200).json("Added")
+  }
+  catch(error){
+    res.status(500).json(error)
+  }
+}
+
 module.exports = {
   addTransaction,
   showAllTransaction,
+  addAll
 };
