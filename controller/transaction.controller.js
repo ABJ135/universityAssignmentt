@@ -37,8 +37,18 @@ const addAll = async (req,res)=>{
   }
 }
 
+const showAll = async(req,res)=>{
+  try {
+    const object = await Transaction.find().populate('bookId').populate('memberId')
+    res.status(200).json(object);
+  } catch (error) {
+    res.status(500).json("Error finding transaction");
+  }
+}
+
 module.exports = {
   addTransaction,
   showAllTransaction,
-  addAll
+  addAll,
+  showAll
 };
